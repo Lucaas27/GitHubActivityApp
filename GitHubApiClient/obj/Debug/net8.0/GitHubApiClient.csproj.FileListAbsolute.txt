@@ -1,0 +1,11 @@
+C:\Users\lucas\Sync\projects\GitHubActivity\GitHubApiClient\bin\Debug\net8.0\GitHubApiClient.deps.json
+c:\Users\lucas\Sync\projects\GitHubActivity\GitHubApiClient\bin\Debug\net8.0\GitHubApiClient.dll
+c:\Users\lucas\Sync\projects\GitHubActivity\GitHubApiClient\bin\Debug\net8.0\GitHubApiClient.pdb
+c:\Users\lucas\Sync\projects\GitHubActivity\GitHubApiClient\obj\Debug\net8.0\GitHubApiClient.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\lucas\Sync\projects\GitHubActivity\GitHubApiClient\obj\Debug\net8.0\GitHubApiClient.AssemblyInfoInputs.cache
+c:\Users\lucas\Sync\projects\GitHubActivity\GitHubApiClient\obj\Debug\net8.0\GitHubApiClient.AssemblyInfo.cs
+c:\Users\lucas\Sync\projects\GitHubActivity\GitHubApiClient\obj\Debug\net8.0\GitHubApiClient.csproj.CoreCompileInputs.cache
+c:\Users\lucas\Sync\projects\GitHubActivity\GitHubApiClient\obj\Debug\net8.0\GitHubApiClient.dll
+c:\Users\lucas\Sync\projects\GitHubActivity\GitHubApiClient\obj\Debug\net8.0\refint\GitHubApiClient.dll
+c:\Users\lucas\Sync\projects\GitHubActivity\GitHubApiClient\obj\Debug\net8.0\GitHubApiClient.pdb
+C:\Users\lucas\Sync\projects\GitHubActivity\GitHubApiClient\obj\Debug\net8.0\ref\GitHubApiClient.dll
