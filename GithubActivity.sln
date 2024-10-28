@@ -3,11 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GithubActivityCLI", "GithubActivityCLI\GithubActivityCLI.csproj", "{4AD53237-6DD7-4140-A5B7-E56C183F6A5F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GithubActivity.CLI", "GithubActivity.CLI\GithubActivity.CLI.csproj", "{4AD53237-6DD7-4140-A5B7-E56C183F6A5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitHubApiClient", "GitHubApiClient\GitHubApiClient.csproj", "{E3F67AC9-D7E0-4CD0-8EAD-036F2C8F1727}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitHubApp", "GitHubApp\GitHubApp.csproj", "{5E2695DC-EA7E-4E0D-B7AD-4E2A86691483}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GithubActivity.App", "GithubActivity.App\GithubActivity.App.csproj", "{5E2695DC-EA7E-4E0D-B7AD-4E2A86691483}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,10 +17,6 @@ Global
 		{4AD53237-6DD7-4140-A5B7-E56C183F6A5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4AD53237-6DD7-4140-A5B7-E56C183F6A5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4AD53237-6DD7-4140-A5B7-E56C183F6A5F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E3F67AC9-D7E0-4CD0-8EAD-036F2C8F1727}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E3F67AC9-D7E0-4CD0-8EAD-036F2C8F1727}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E3F67AC9-D7E0-4CD0-8EAD-036F2C8F1727}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E3F67AC9-D7E0-4CD0-8EAD-036F2C8F1727}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5E2695DC-EA7E-4E0D-B7AD-4E2A86691483}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5E2695DC-EA7E-4E0D-B7AD-4E2A86691483}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E2695DC-EA7E-4E0D-B7AD-4E2A86691483}.Release|Any CPU.ActiveCfg = Release|Any CPU
