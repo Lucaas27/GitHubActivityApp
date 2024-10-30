@@ -1,6 +1,6 @@
 namespace GithubActivity.CLI.Interaction;
 
-public static class Interaction
+public static class ConsoleInteraction
 {
     public static void DisplayError(string message)
     {
