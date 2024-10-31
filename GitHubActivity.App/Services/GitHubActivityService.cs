@@ -10,6 +10,26 @@ public class GitHubActivityService : IGitHubActivityService
 {
     private readonly HttpClient _httpClient = new();
     private const string GitHubApiBaseUrl = "https://api.github.com";
+    private static readonly Dictionary<string, string> _actionTemplates = new()
+    {
+        { "CreateBranchEvent", "{user} created the branch {refValue} in {repoName} on {createdAt}" },
+        { "CreateRepositoryEvent", "{user} created a new repository in {repoName} on {createdAt}" },
+        { "CommitCommentEvent", "{user} commented on a commit in {prCommentUrl} on {createdAt}" },
+        { "DeleteEvent", "{user} deleted {repoType} {refValue} from {repoName} on {createdAt}" },
+        { "ForkEvent", "{user} forked a repository in {repoName} on {createdAt}" },
+        { "GollumEvent", "{user} performed a wiki edit on {createdAt}" },
+        { "IssuesEvent", "{user} opened the issue \"{issueTitle}\" in {repoName} on {createdAt}" },
+        { "IssueCommentEvent", "{user} commented on the issue \"{issueTitle}\" in {prCommentUrl} on {createdAt}" },
+        { "PullRequestEvent", "{user} opened a pull request in {repoName} on {createdAt}" },
+        { "PullRequestReviewEvent", "{user} reviewed a pull request in {repoName} on {createdAt}" },
+        { "PullRequestReviewCommentEvent", "{user} commented on a pull request in {prCommentUrl} on {createdAt}" },
+        { "PushEvent", "{user} pushed {commitsCount} commit(s) to {repoName} on {createdAt}" },
+        { "PullRequestReviewThreadEvent", "{user} commented on a pull request review in {prCommentUrl} on {createdAt}" },
+        { "SponsorshipEvent", "{user} sponsored a user in {repoName} on {createdAt}" },
+        { "ReleaseEvent", "{user} published a release in {repoName} on {createdAt}" },
+        { "WatchEvent", "{user} starred the repo {repoName} on {createdAt}" },
+        { "default", "{user} performed an unknown action in {repoName} on {createdAt}" }
+    };
 
     public GitHubActivityService()
     {
@@ -39,128 +59,39 @@ public class GitHubActivityService : IGitHubActivityService
         var type = @event.Type;
         var refType = @event.Payload?.Ref_Type ?? "unknown";
         var refValue = @event.Payload?.Ref ?? "unknown";
-        var comment = @event.Payload?.Comment?.Body ?? "unknown";
         var issueTitle = @event.Payload?.Issue?.Title ?? "unknown";
         var commitsCount = @event.Payload?.Commits?.Count ?? 0;
-        var createdAt = $"{@event.CreatedAt:yyyy-MM-dd} at {@event.CreatedAt:HH:mm:ss}";
+        var createdAt = $"{@event.CreatedAt:dd-MM-yyyy} at {@event.CreatedAt:HH:mm:ss}";
         var repoName = @event.RepoName;
+        var user = char.ToUpper(@event.DisplayLogin[0]) + @event.DisplayLogin.Substring(1);
+        var prCommentUrl = @event.Payload?.Comment?.HtmlUrl ?? "unknown";
 
-        return type switch
+
+        var template = type == "CreateEvent"
+            ? (refType == "repository" ? _actionTemplates["CreateRepositoryEvent"] : _actionTemplates["CreateBranchEvent"])
+            : (_actionTemplates.ContainsKey(type) ? _actionTemplates[type] : _actionTemplates["default"]);
+
+        var values = new Dictionary<string, string>
         {
-            "CreateEvent" => $"Created a {refType} {refValue} in {repoName} on {createdAt}",
-            "CommitCommentEvent" => $"Commented on a commit in {repoName} on {createdAt}",
-            "DeleteEvent" => $"Deleted {repoName} on {createdAt}",
-            "ForkEvent" => $"Forked a repository in {repoName} on {createdAt}",
-            "GollumEvent" => $"Performed a wiki edit on {createdAt}",
-            "IssuesEvent" => $"Opened an issue in {repoName} on {createdAt}",
-            "IssueCommentEvent" => $"Commented  \"{comment}\" on the issue \"{issueTitle}\" in {repoName} on {createdAt}",
-            "PullRequestEvent" => $"Opened a pull request in {repoName} on {createdAt}",
-            "PullRequestReviewEvent" => $"Reviewed a pull request in {repoName} on {createdAt}",
-            "PullRequestReviewCommentEvent" => $"Commented on a pull request in {repoName} on {createdAt}",
-            "PushEvent" => $"Pushed {commitsCount} commit(s) to {repoName} on {createdAt}",
-            "PullRequestReviewThreadEvent" => $"Commented on a pull request review in {repoName} on {createdAt}",
-            "SponsorshipEvent" => $"Sponsored a user in {repoName} on {createdAt}",
-            "ReleaseEvent" => $"Published a release in {repoName} on {createdAt}",
-            "WatchEvent" => $"Starred the repo {repoName} on {createdAt}",
-            _ => $"Performed an unknown action in {repoName} on {createdAt}"
+            { "refType", refType },
+            { "refValue", refValue },
+            { "repoName", repoName },
+            { "createdAt", createdAt },
+            { "issueTitle", issueTitle },
+            { "commitsCount", commitsCount.ToString() },
+            { "user", user },
+            { "prCommentUrl", prCommentUrl }
         };
+
+
+        foreach (var kvp in values)
+        {
+            template = template.Replace($"{{{kvp.Key}}}", kvp.Value);
+        }
+
+        return template;
+
     }
-
-    // public IEnumerable<string> MapEventTypeToAction(IEnumerable<EventModel> events)
-    // {
-
-    //     var eventTypesMapped = MapEventTypes(events);
-    //     List<string> actions = new();
-
-    //     foreach (var (type, eventList) in eventTypesMapped)
-    //     {
-    //         foreach (var @event in eventList)
-    //         {
-    //             switch (type)
-    //             {
-    //                 case "CreateEvent":
-    //                     actions.Add($"Created a {@event.Payload.Ref_Type} {@event.Payload.Ref} in {@event.RepoName} on {@event.CreatedAt.ToString().Split(" ")[0]} at {@event.CreatedAt.ToString().Split(" ")[1]}");
-
-    //                     break;
-    //                 case "CommitCommentEvent":
-    //                     actions.Add($"Commented \"{@event.Payload.Comment}\" on a commit in {@event.RepoName} on {@event.CreatedAt}");
-
-    //                     break;
-    //                 case "DeleteEvent":
-    //                     actions.Add($"Deleted a repository in {@event.RepoName} on {@event.CreatedAt}");
-
-    //                     break;
-
-    //                 case "ForkEvent":
-    //                     actions.Add($"Forked a repository in {@event.RepoName} on {@event.CreatedAt}");
-
-    //                     break;
-    //                 case "GollumEvent":
-    //                     actions.Add("Performed a wiki edit");
-
-    //                     break;
-
-    //                 case "IssuesEvent":
-    //                     actions.Add($"Opened an issue in {@event.RepoName} on {@event.CreatedAt}");
-
-    //                     break;
-
-    //                 case "IssueCommentEvent":
-    //                     actions.Add($"Commented on an issue in {@event.RepoName} on {@event.CreatedAt} - {@event.Payload.Issue.Title}");
-
-    //                     break;
-
-    //                 case "PullRequestEvent":
-    //                     actions.Add($"Opened a pull request in {@event.RepoName}");
-
-    //                     break;
-
-    //                 case "PullRequestReviewEvent":
-    //                     actions.Add($"Reviewed a pull request in {@event.RepoName} on {@event.CreatedAt}");
-
-    //                     break;
-    //                 case "PullRequestReviewCommentEvent":
-    //                     actions.Add($"Commented on a pull request on {@event.CreatedAt} - {@event.RepoName}");
-
-    //                     break;
-
-    //                 case "PushEvent":
-    //                     actions.Add($"Pushed {@event.Payload.Commits.Count} commit(s) to {@event.RepoName} on {@event.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss")}");
-
-    //                     break;
-
-    //                 case "PullRequestReviewThreadEvent":
-    //                     actions.Add($"Commented on a pull request review on {@event.CreatedAt} - {@event.RepoName}");
-
-    //                     break;
-
-    //                 case "SponsorshipEvent":
-    //                     actions.Add($"Sponsored a user in {@event.RepoName} on {@event.CreatedAt}");
-
-    //                     break;
-
-    //                 case "ReleaseEvent":
-    //                     actions.Add($"Published a release in {@event.RepoName} on {@event.CreatedAt}");
-
-    //                     break;
-
-    //                 case "WatchEvent":
-    //                     actions.Add($"Starred the repo {@event.RepoName} on {@event.CreatedAt}");
-
-    //                     break;
-    //                 default:
-    //                     actions.Add($"Performed an unknown action in {@event.RepoName} on {@event.CreatedAt}");
-
-    //                     break;
-    //             }
-
-
-    //         }
-
-    //     }
-
-    //     return actions;
-    // }
 
 
     private static Dictionary<string, List<EventModel>> GroupEventTypes(IEnumerable<EventModel> events)
