@@ -19,6 +19,7 @@ try
 }
 catch (Exception ex)
 {
-    ConsoleInteraction.DisplayError($"An error occurred: {ex.Message}");
-    ConsoleInteraction.DisplayError($"{ex.StackTrace}");
+    ConsoleInteraction.DisplayError("There was an error processing the request");
+    ConsoleInteraction.DisplayError($"{ex.Message}");
+
 }
