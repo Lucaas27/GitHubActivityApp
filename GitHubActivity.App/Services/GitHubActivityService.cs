@@ -23,7 +23,7 @@ public class GitHubActivityService : IGitHubActivityService
         { "PullRequestEvent", "{user} opened a pull request in {repoName} on {createdAt}" },
         { "PullRequestReviewEvent", "{user} reviewed a pull request in {repoName} on {createdAt}" },
         { "PullRequestReviewCommentEvent", "{user} commented on a pull request in {prCommentUrl} on {createdAt}" },
-        { "PushEvent", "{user} pushed {commitsCount} commit(s) to {repoName} on {createdAt}" },
+        { "PushEvent", "{user} pushed {commitsCount} commit(s) to {repoName} on branch {refValue} on {createdAt}" },
         { "PullRequestReviewThreadEvent", "{user} commented on a pull request review in {prCommentUrl} on {createdAt}" },
         { "SponsorshipEvent", "{user} sponsored a user in {repoName} on {createdAt}" },
         { "ReleaseEvent", "{user} published a release in {repoName} on {createdAt}" },
