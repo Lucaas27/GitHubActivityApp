@@ -18,7 +18,9 @@ public class App
     {
         var actions = _gitHubActivityService.MapEventTypeToAction(events);
         ConsoleInteraction.DisplayMessage("Recent activity:");
-        foreach (var action in actions)
+        foreach (var action in actions
+                                    .OrderBy(a => a.Split(" ")[^2]) // Primary sort by the date
+                                    .ThenBy(a => a.Split(" ")[^1])) // Secondary sort by the time
         {
             ConsoleInteraction.DisplayMessage(action);
         }
