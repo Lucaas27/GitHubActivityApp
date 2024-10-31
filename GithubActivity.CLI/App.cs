@@ -16,13 +16,15 @@ public class App
 
     private void GetEventsDetails(IEnumerable<EventModel> events)
     {
-        var actions = _gitHubActivityService.MapEventTypeToAction(events);
+        var actions = _gitHubActivityService.MapEventTypeToAction(events)
+                                    .OrderByDescending(a => a.Split(" ")[^4]) // Primary sort by the date
+                                    .ThenByDescending(a => a.Split(" ")[^2]); // Secondary sort by the time;
         ConsoleInteraction.DisplayMessage("Recent activity:");
-        foreach (var action in actions
-                                    .OrderBy(a => a.Split(" ")[^2]) // Primary sort by the date
-                                    .ThenBy(a => a.Split(" ")[^1])) // Secondary sort by the time
+
+        foreach (var action in actions)
         {
             ConsoleInteraction.DisplayMessage(action);
+            ConsoleInteraction.DisplayMessage("====================================");
         }
 
 

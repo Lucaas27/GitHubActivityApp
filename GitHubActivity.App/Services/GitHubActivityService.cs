@@ -12,23 +12,23 @@ public class GitHubActivityService : IGitHubActivityService
     private const string GitHubApiBaseUrl = "https://api.github.com";
     private static readonly Dictionary<string, string> _actionTemplates = new()
     {
-        { "CreateBranchEvent", "{user} created the branch {refValue} in {repoName} on {createdAt}" },
-        { "CreateRepositoryEvent", "{user} created a new repository in {repoName} on {createdAt}" },
-        { "CommitCommentEvent", "{user} commented on a commit in {prCommentUrl} on {createdAt}" },
-        { "DeleteEvent", "{user} deleted {repoType} {refValue} from {repoName} on {createdAt}" },
-        { "ForkEvent", "{user} forked a repository in {repoName} on {createdAt}" },
-        { "GollumEvent", "{user} performed a wiki edit on {createdAt}" },
-        { "IssuesEvent", "{user} opened the issue \"{issueTitle}\" in {repoName} on {createdAt}" },
-        { "IssueCommentEvent", "{user} commented on the issue \"{issueTitle}\" in {prCommentUrl} on {createdAt}" },
-        { "PullRequestEvent", "{user} opened a pull request in {prUrl} on {createdAt}" },
-        { "PullRequestReviewEvent", "{user} reviewed a pull request in {prUrl} on {createdAt}" },
-        { "PullRequestReviewCommentEvent", "{user} commented on a pull request in {prCommentUrl} on {createdAt}" },
-        { "PushEvent", "{user} pushed {commitsCount} commit(s) to {repoName} on branch {refValue} on {createdAt}" },
-        { "PullRequestReviewThreadEvent", "{user} commented on a pull request review in {prUrl} on {createdAt}" },
-        { "SponsorshipEvent", "{user} sponsored a user in {repoName} on {createdAt}" },
-        { "ReleaseEvent", "{user} published a release in {repoName} on {createdAt}" },
-        { "WatchEvent", "{user} starred the repo {repoName} on {createdAt}" },
-        { "default", "{user} performed an unknown action in {repoName} on {createdAt}" }
+        { "CreateBranchEvent", "{user} created the branch {refValue} in {repoName} {createdAt}" },
+        { "CreateRepositoryEvent", "{user} created a new repository in {repoName} {createdAt}" },
+        { "CommitCommentEvent", "{user} commented on a commit in {prCommentUrl} {createdAt}" },
+        { "DeleteEvent", "{user} deleted {repoType} {refValue} from {repoName} {createdAt}" },
+        { "ForkEvent", "{user} forked a repository in {repoName} {createdAt}" },
+        { "GollumEvent", "{user} performed a wiki edit {createdAt}" },
+        { "IssuesEvent", "{user} opened the issue \"{issueTitle}\" in {repoName} {createdAt}" },
+        { "IssueCommentEvent", "{user} commented on the issue \"{issueTitle}\" in {prCommentUrl} {createdAt}" },
+        { "PullRequestEvent", "{user} opened a pull request in {prUrl} {createdAt}" },
+        { "PullRequestReviewEvent", "{user} reviewed a pull request in {prUrl} {createdAt}" },
+        { "PullRequestReviewCommentEvent", "{user} commented on a pull request in {prCommentUrl} {createdAt}" },
+        { "PushEvent", "{user} pushed {commitsCount} commit(s) to {repoName} on branch {refValue} {createdAt}" },
+        { "PullRequestReviewThreadEvent", "{user} commented on a pull request review in {prUrl} {createdAt}" },
+        { "SponsorshipEvent", "{user} sponsored a user in {repoName} {createdAt}" },
+        { "ReleaseEvent", "{user} published a release in {repoName} {createdAt}" },
+        { "WatchEvent", "{user} starred the repo {repoName} {createdAt}" },
+        { "default", "{user} performed an unknown action in {repoName} {createdAt}" }
     };
 
     public GitHubActivityService()
@@ -61,7 +61,7 @@ public class GitHubActivityService : IGitHubActivityService
         var refValue = @event.Payload?.Ref ?? "unknown";
         var issueTitle = @event.Payload?.Issue?.Title ?? "unknown";
         var commitsCount = @event.Payload?.Commits?.Count ?? 0;
-        var createdAt = $"{@event.CreatedAt:dd-MM-yyyy} at {@event.CreatedAt:HH:mm:ss}";
+        var createdAt = $"on the {@event.CreatedAt:dd-MM-yyyy} at {@event.CreatedAt:HH:mm:ss}";
         var repoName = @event.RepoName;
         var user = char.ToUpper(@event.DisplayLogin[0]) + @event.DisplayLogin.Substring(1);
         var prCommentUrl = @event.Payload?.Comment?.HtmlUrl ?? "unknown";
