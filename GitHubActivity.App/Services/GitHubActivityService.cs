@@ -20,11 +20,11 @@ public class GitHubActivityService : IGitHubActivityService
         { "GollumEvent", "{user} performed a wiki edit on {createdAt}" },
         { "IssuesEvent", "{user} opened the issue \"{issueTitle}\" in {repoName} on {createdAt}" },
         { "IssueCommentEvent", "{user} commented on the issue \"{issueTitle}\" in {prCommentUrl} on {createdAt}" },
-        { "PullRequestEvent", "{user} opened a pull request in {repoName} on {createdAt}" },
-        { "PullRequestReviewEvent", "{user} reviewed a pull request in {repoName} on {createdAt}" },
+        { "PullRequestEvent", "{user} opened a pull request in {prUrl} on {createdAt}" },
+        { "PullRequestReviewEvent", "{user} reviewed a pull request in {prUrl} on {createdAt}" },
         { "PullRequestReviewCommentEvent", "{user} commented on a pull request in {prCommentUrl} on {createdAt}" },
         { "PushEvent", "{user} pushed {commitsCount} commit(s) to {repoName} on branch {refValue} on {createdAt}" },
-        { "PullRequestReviewThreadEvent", "{user} commented on a pull request review in {prCommentUrl} on {createdAt}" },
+        { "PullRequestReviewThreadEvent", "{user} commented on a pull request review in {prUrl} on {createdAt}" },
         { "SponsorshipEvent", "{user} sponsored a user in {repoName} on {createdAt}" },
         { "ReleaseEvent", "{user} published a release in {repoName} on {createdAt}" },
         { "WatchEvent", "{user} starred the repo {repoName} on {createdAt}" },
@@ -65,6 +65,7 @@ public class GitHubActivityService : IGitHubActivityService
         var repoName = @event.RepoName;
         var user = char.ToUpper(@event.DisplayLogin[0]) + @event.DisplayLogin.Substring(1);
         var prCommentUrl = @event.Payload?.Comment?.HtmlUrl ?? "unknown";
+        var prUrl = @event.Payload?.PullRequest?.Url ?? "unknown";
 
 
         var template = type == "CreateEvent"
@@ -80,7 +81,8 @@ public class GitHubActivityService : IGitHubActivityService
             { "issueTitle", issueTitle },
             { "commitsCount", commitsCount.ToString() },
             { "user", user },
-            { "prCommentUrl", prCommentUrl }
+            { "prCommentUrl", prCommentUrl },
+            { "prUrl", prUrl },
         };
 
 

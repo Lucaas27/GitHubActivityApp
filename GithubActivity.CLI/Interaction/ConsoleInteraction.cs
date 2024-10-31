@@ -12,7 +12,7 @@ public static class ConsoleInteraction
     public static void DisplayMessage(string message)
     {
         Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine(message);
+        Console.WriteLine($"{Environment.NewLine}{message}");
         Console.ResetColor();
     }
 }

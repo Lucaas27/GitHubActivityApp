@@ -14,7 +14,7 @@ public record Payload(
     [property: JsonPropertyName("commits")] IReadOnlyList<Commit> Commits,
     [property: JsonPropertyName("action")] string Action,
     [property: JsonPropertyName("number")] int? Number,
-    [property: JsonPropertyName("pull_request")] dynamic PullRequest,
+    [property: JsonPropertyName("pull_request")] PullRequest PullRequest,
     [property: JsonPropertyName("comment")] Comment Comment,
     [property: JsonPropertyName("review")] dynamic Review,
     [property: JsonPropertyName("issue")] Issue Issue
