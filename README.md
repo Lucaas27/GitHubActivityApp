@@ -1,11 +1,11 @@
 <h1 align="center">GitHubActivity</h1>
 
 <p align="center">
-  <img alt="Github top language" src="https://img.shields.io/github/languages/top/lucaas27/githubactivity?color=56BEB8">
+  <img alt="Github top language" src="https://img.shields.io/github/languages/top/lucaas27/githubactivityapp?color=56BEB8">
 
-  <img alt="Repository size" src="https://img.shields.io/github/repo-size/lucaas27/githubactivity?color=56BEB8">
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/lucaas27/githubactivityapp?color=56BEB8">
 
-  <img alt="License" src="https://img.shields.io/github/license/lucaas27/githubactivity?color=56BEB8">
+  <img alt="License" src="https://img.shields.io/github/license/lucaas27/githubactivityapp?color=56BEB8">
 </p>
 
 <div align="center" id="top">
@@ -64,10 +64,10 @@ Before starting :checkered_flag:, you need to have [Git](https://git-scm.com) an
 
 ```bash
 # Clone this project
-$ git clone https://github.com/lucaas27/githubactivity
+$ git clone https://github.com/lucaas27/githubactivityapp
 
 # Access
-$ cd githubactivity
+$ cd githubactivityapp
 
 # Install dependencies
 $ dotnet restore
